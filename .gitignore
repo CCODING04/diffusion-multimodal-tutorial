@@ -1,0 +1,11 @@
+*.wav
+*.mp4
+*.pt
+*.pth
+*.bin
+*.safetensors
+__pycache__/
+.DS_Store
+tex-source/
+*.pdf
+!papers/*/paper.pdf
