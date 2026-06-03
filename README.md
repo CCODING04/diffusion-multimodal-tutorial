@@ -50,38 +50,208 @@ makemore                          ──→ 生成模型直觉
 
 ---
 
-## 📖 教程结构：三大模块
+## 📖 教程结构：三大模块 × 10 章
 
 ### 模块 A：生成模型基础（1章）
 
-> 从你已经知道的"生成"出发，建立通往 Diffusion 的桥梁。
+#### A1 生成模型全景：从自回归到扩散
 
-| 章节 | 标题 | 核心内容 | 衔接已有知识 |
-|------|------|---------|-------------|
-| A1 | 生成模型全景：从自回归到扩散 | GAN/VAE/Flow/Diffusion 四大生成范式对比；为什么 Diffusion 赢了 | makemore 的语言模型生成 + llm-paper-tutorials GPT-2/3 的自回归 |
+**核心内容**：GAN / VAE / Flow / Diffusion 四大生成范式对比；为什么 Diffusion 赢了；生成模型的发展脉络
+
+**衔接已有知识**：
+- makemore Part1-2 的语言模型生成（自回归生成）
+- llm-paper-tutorials 03-GPT-2（自回归生成大规模应用）
+
+**参考资源**：
+| 类型 | 资源 | 对应内容 |
+|------|------|---------|
+| 🎓 课程 | Stanford CS236: Deep Generative Models (deepgenerativemodels.github.io) | 整个课程就是生成模型全景：VAE/Flow/GAN/Diffusion |
+| 🎓 课程 | Stanford CS231n 2025 Lecture 13: Generative Models Part 1 | GAN + VAE 基础（slides: cs231n.stanford.edu） |
+| 📄 论文 | NIPS 2016 Tutorial: Generative Adversarial Networks (Goodfellow) | GAN 的经典入门教程论文 |
+| 📄 论文 | Auto-Encoding Variational Bayes (Kingma & Welling, 2013) | VAE 奠基论文 |
+| 🎬 视频 | DeepLearning.AI: How Diffusion Models Work (deeplearning.ai/courses/diffusion-models) | 前15分钟有生成模型全景对比 |
+| 📝 博客 | Lil'Log: Generative Models (lilianweng.github.io) | GAN/VAE/Flow/Diffusion 图文对比，非常清晰 |
+
+---
 
 ### 模块 B：Diffusion 模型（5章）
 
-> 从直觉到数学到代码到前沿，完整掌握 Diffusion。
+#### B1 Diffusion 直觉：加噪与去噪
 
-| 章节 | 标题 | 核心内容 | 衔接已有知识 |
-|------|------|---------|-------------|
-| B1 | Diffusion 直觉：加噪与去噪 | 前向过程（逐步加噪）、反向过程（逐步去噪）、核心思想 | llm-math-foundations Ch03 概率分布、Ch06 信息论 |
-| B2 | DDPM 数学：从直觉到公式 | 前向过程的马尔可夫链、反向过程推导、噪声预测、训练目标推导 | llm-math-foundations Ch04 矩阵求导、Ch08 变分推断 |
-| B3 | DDIM 与加速采样 | 从随机到确定性采样、跳步采样、ODE 视角 | llm-math-foundations Ch05 优化（梯度下降类比） |
-| B4 | Latent Diffusion & 架构 | VAE 编码器、UNet vs DiT、条件生成（文本→图像）、Classifier-Free Guidance | diy-llm Ch4 Transformer + llm-paper-tutorials 07-LLaMA 架构设计 |
-| B5 | DiT 与前沿应用 | DiT 架构详解、Video Diffusion、Sora 的技术路线、Scaling | llm-paper-tutorials 05-Chinchilla Scaling Laws + diy-llm Ch13 |
+**核心内容**：前向过程（逐步加噪）可视化、反向过程（逐步去噪）直觉、核心思想——知道怎么加噪声就能学怎么去掉噪声
+
+**衔接已有知识**：
+- llm-math-foundations Ch03 概率分布（高斯分布、条件概率）
+- llm-math-foundations Ch06 信息论（熵、信息量）
+- makemore 的训练过程直觉（从噪声中学到结构）
+
+**参考资源**：
+| 类型 | 资源 | 对应内容 |
+|------|------|---------|
+| 🎓 短课 | **DeepLearning.AI: How Diffusion Models Work** (deeplearning.ai/courses/diffusion-models) | ⭐ **首选预习**。1小时，Sharon Zhou 主讲，从零构建 Diffusion，含 Jupyter notebook |
+| 🎓 短课 | Coursera 同步版 (coursera.org/projects/how-diffusion-models-work-project) | 同上，Coursera 版本 |
+| 🎓 课程 | **MIT 6.S183: Practical Diffusion Models** (practical-diffusion.org) | ⭐ **核心课程**。IAP 2026，含 Problem Sets + 采样可视化实验 |
+| 🎬 视频 | YouTube: How Diffusion Models Work (DeepLearningAI 频道, 21K views) | 免费预览版，Andrew Ng 介绍 + Sharon Zhou 讲解 |
+| 📝 博客 | What are Diffusion Models? (IBM Think) | 直觉级解释，图文并茂 |
+| 📄 论文 | **DDPM** (Ho et al., 2020, arXiv:2006.11239) | 奠基论文，本节主要看 Figure 2（加噪过程图）和前两节 |
+
+#### B2 DDPM 数学：从直觉到公式
+
+**核心内容**：前向过程马尔可夫链数学推导、反向过程推导、噪声预测目标、训练目标（ELBO→简化形式）推导
+
+**衔接已有知识**：
+- llm-math-foundations Ch04 矩阵求导（梯度形状分析）
+- llm-math-foundations Ch08 变分推断（ELBO、KL散度）
+- diy-llm Ch3 训练原语（损失函数推导类比）
+
+**参考资源**：
+| 类型 | 资源 | 对应内容 |
+|------|------|---------|
+| 🎓 课程 | **Stanford CS236: Deep Generative Models** (deepgenerativemodels.github.io) | 专门的 Diffusion 课时，含数学推导作业 |
+| 🎓 讲座 | **Stanford CS231n 2025 Lecture 14: Generative Models Part 2** | Score Function、SDE 视角、数学推导（slides: cs231n.stanford.edu/slides/2025） |
+| 📄 论文 | **DDPM** (Ho et al., 2020) | 数学推导主要参考 Section 3-4 |
+| 📄 论文 | **Score-Based Generative Modeling through SDEs** (Song et al., 2021, ICLR) | SDE 统一视角，更优雅的数学框架 |
+| 📄 论文 | **Understanding Diffusion Models: A Unified Perspective** (Luo, 2022) | ⭐ 最佳数学综述，ELBO→DDPM 推导链，推荐精读 |
+| 📝 博客 | Lil'Log: What are Diffusion Models? (lilianweng.github.io) | 数学推导+直觉，Calvin Luo 的博客 |
+
+#### B3 DDIM 与加速采样
+
+**核心内容**：从随机到确定性采样、跳步采样、ODE 视角、Consistency Models
+
+**衔接已有知识**：
+- llm-math-foundations Ch05 优化（梯度下降的类比——迭代优化）
+- diy-llm Ch7 CUDA（采样效率的工程意义）
+
+**参考资源**：
+| 类型 | 资源 | 对应内容 |
+|------|------|---------|
+| 📄 论文 | **DDIM** (Song et al., 2020, arXiv:2010.02502) | 核心论文，非马尔可夫推理 |
+| 📄 论文 | **DPM-Solver** (Lu et al., 2022) | 更快的 ODE 求解器，工程实践主流 |
+| 📄 论文 | **Consistency Models** (Song et al., 2023) | 一步生成，DDIM 的极限加速 |
+| 🎓 课程 | MIT 6.S183 Problem Set 2-3 | 采样加速实验 |
+| 🎓 讲座 | CS231n 2025 Lecture 14 后半部分 | Diffusion Distillation（蒸馏加速） |
+
+#### B4 Latent Diffusion & 架构设计
+
+**核心内容**：VAE 编码器（像素空间→潜在空间）、UNet vs DiT、条件生成（文本→图像）、Classifier-Free Guidance
+
+**衔接已有知识**：
+- diy-llm Ch4 Transformer（DiT 直接用 Transformer 替代 UNet）
+- llm-paper-tutorials 07-LLaMA（架构设计的类比——为什么选这个结构）
+- llm-math-foundations Ch07 注意力数学（Cross-Attention 用于条件注入）
+
+**参考资源**：
+| 类型 | 资源 | 对应内容 |
+|------|------|---------|
+| 📄 论文 | **High-Resolution Image Synthesis with Latent Diffusion Models** (Rombach et al., 2022) | ⭐ Stable Diffusion 核心，Latent Diffusion 奠基 |
+| 📄 论文 | **Classifier-Free Diffusion Guidance** (Ho & Salimans, 2022) | CFG 技术，所有条件 Diffusion 的标配 |
+| 🎓 课程 | MIT 6.S183 | 条件生成、图像修复的 Problem Set |
+| 🎓 讲座 | CS231n 2025 Lecture 14 | Text-to-Image 架构图、Latent Diffusion 流程 |
+| 📄 论文 | **VAE: Auto-Encoding Variational Bayes** (Kingma & Welling, 2013) | VAE 基础，Latent Diffusion 的编码器 |
+| 📄 论文 | **VQ-VAE** (van den Oord et al., 2017) | 离散编码，DALL-E 用的分词方式 |
+| 🎬 视频 | B站：多模态教程 BV1azRgYbECW 第5-2节 "Image Synthesis with Diffusion Models" | 中文讲解 Stable Diffusion 架构 |
+
+#### B5 DiT 与前沿应用
+
+**核心内容**：DiT 架构详解（Transformer 替代 UNet）、Scaling Laws for Diffusion、Video Diffusion、Sora 技术路线
+
+**衔接已有知识**：
+- llm-paper-tutorials 05-Chinchilla（Scaling Laws 直接类比）
+- diy-llm Ch13 Scaling Laws（计算最优策略）
+- llm-paper-tutorials 01-Attention（Transformer 架构直接复用）
+
+**参考资源**：
+| 类型 | 资源 | 对应内容 |
+|------|------|---------|
+| 📄 论文 | **Scalable Diffusion Models with Transformers (DiT)** (Peebles & Xie, 2022) | ⭐ DiT 核心论文，你的兴趣方向 |
+| 📄 论文 | **Scaling Rectified Flow Transformers for High-Resolution Image Synthesis** (2024) | SD3 的 Flow Matching 架构 |
+| 📄 论文 | **Sora / Video Generation** 相关技术报告 | Video Diffusion 的最新进展 |
+| 🎓 讲座 | CS231n 2025 Lecture 14 最后部分 | Video Diffusion 时间线、模型对比 |
+| 📄 论文 | **Scaling Laws for Generative Mixed-Modal Models** | 多模态生成的 Scaling |
+| 🎬 视频 | B站：多模态教程相关章节 | SAM2、视觉大模型 |
+
+---
 
 ### 模块 C：多模态大模型（4章）
 
-> 让 LLM "看见" 世界——从视觉编码到多模态对话。
+#### C1 视觉基础：Vision Transformer
 
-| 章节 | 标题 | 核心内容 | 衔接已有知识 |
-|------|------|---------|-------------|
-| C1 | 视觉基础：ViT | 图像切 patch、位置编码、ViT 架构、与文本 Transformer 的对比 | diy-llm Ch4 Transformer + llm-paper-tutorials 01-Attention |
-| C2 | 图文对齐：CLIP | 对比学习、图文编码器、Zero-Shot 分类、CLIP 的局限 | llm-math-foundations Ch08 对比学习损失 + diy-llm Ch10 微调 |
-| C3 | 多模态架构：从 BLIP 到 LLaVA | Q-Former 桥接、LLaVA 架构（CLIP + LLM）、指令微调数据构建、多模态幻觉问题 | llm-paper-tutorials 06-InstructGPT 指令微调 + 08-LoRA 高效微调 |
-| C4 | 多模态前沿 | GPT-4V / Qwen-VL 架构、多模态 RLHF、视频理解、多模态 Agent | llm-paper-tutorials A1-DeepSeek-V3 + diy-llm Ch11 RLHF |
+**核心内容**：图像切 patch、位置编码、ViT 架构、与文本 Transformer 的异同、图像分类到通用视觉编码器
+
+**衔接已有知识**：
+- diy-llm Ch4 Transformer（架构完全复用，只是输入从 token 变成 image patch）
+- llm-paper-tutorials 01-Attention（自注意力在视觉中的应用）
+- llm-math-foundations Ch07 注意力数学（位置编码的数学）
+
+**参考资源**：
+| 类型 | 资源 | 对应内容 |
+|------|------|---------|
+| 📄 论文 | **An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale (ViT)** (Dosovitskiy et al., 2020) | ⭐ ViT 奠基论文 |
+| 🎓 讲座 | **Stanford CS231n 2025 Lecture 12: Vision Transformer** | ViT 详解 + 与 CNN 对比 |
+| 🎓 课程 | B站：多模态教程 BV1azRgYbECW 第5-1节 "Vision Transformer (ViT)介绍" | 中文讲解，~2小时 |
+| 📄 论文 | **Swin Transformer** (Liu et al., 2021) | 层次化 ViT，你的论文复现计划中的目标之一 |
+| 📝 博客 | The Illustrated ViT (jalammar.github.io) | 图解 ViT，非常直观 |
+
+#### C2 图文对齐：CLIP
+
+**核心内容**：对比学习（Contrastive Learning）、图文双编码器、Zero-Shot 分类、CLIP 的局限
+
+**衔接已有知识**：
+- llm-math-foundations Ch08 对比学习损失（InfoNCE）
+- diy-llm Ch10 微调（CLIP 的预训练→下游任务类比）
+- llm-paper-tutorials 01-Attention（编码器架构）
+
+**参考资源**：
+| 类型 | 资源 | 对应内容 |
+|------|------|---------|
+| 📄 论文 | **Learning Transferable Visual Models From Natural Language Supervision (CLIP)** (Radford et al., 2021) | ⭐ CLIP 核心，面试高频 |
+| 🎓 讲座 | **Stanford CS231n 2025 Lecture 16: Multi-Modal Foundation Models** 前半部分 | CLIP 架构、训练、Zero-Shot 评估 |
+| 🎓 课程 | B站：多模态教程 BV1azRgYbECW | "多模态论文精读：CLIP、ViLT、ALBEF、VLMO、BLIP、CoCa" |
+| 📄 论文 | **SigLIP** (Zhai et al., 2023) | Sigmoid 替代 Softmax 的对比损失，CLIP 改进 |
+| 🎬 视频 | Yannic Kilcher: CLIP Paper Explanation | 英文论文精读视频 |
+| 📄 论文 | **BLIP / BLIP-2** (Li et al., 2022/2023) | CLIP 后续，Q-Former 桥接视觉和语言 |
+
+#### C3 多模态架构：从 BLIP-2 到 LLaVA
+
+**核心内容**：Q-Former 桥接机制、LLaVA 架构（CLIP 视觉编码器 + LLM）、指令微调数据构建、多模态幻觉问题
+
+**衔接已有知识**：
+- llm-paper-tutorials 06-InstructGPT（指令微调方法论直接复用）
+- llm-paper-tutorials 08-LoRA（多模态微调的实际应用）
+- diy-llm Ch10 SFT（监督微调流程）
+- llm-paper-tutorials 07-LLaMA（LLM backbone 选择）
+
+**参考资源**：
+| 类型 | 资源 | 对应内容 |
+|------|------|---------|
+| 📄 论文 | **Visual Instruction Tuning (LLaVA)** (Liu et al., 2023) | ⭐ 多模态指令微调里程碑 |
+| 📄 论文 | **BLIP-2** (Li et al., 2023) | Q-Former 设计，高效桥接 |
+| 🎓 讲座 | **CS231n 2025 Lecture 16 后半部分** | LLaVA 架构详解：CLIP→Linear→LLM |
+| 🎓 教程 | **CVPR 2024 MLLM Tutorial** (mllm2024.github.io) | 多模态架构设计、幻觉分析、高效学习 |
+| 🎓 课程 | **TGLTommy: 多模态大模型前沿算法与实战** (tgltommy.com) | LLaVA/Qwen-VL 全流程实战：推理+微调+部署（付费） |
+| 🎬 视频 | B站：多模态教程 相关章节 | LLaVA、LLaVA-NeXT 中文讲解 |
+| 📄 论文 | **MiniGPT-4** (Zhu et al., 2023) | 另一种多模态方案，与 LLaVA 对比 |
+| 📝 博客 | Chip Huyen: Large Multimodal Models | 多模态系统综述 |
+
+#### C4 多模态前沿
+
+**核心内容**：GPT-4V / Qwen-VL 架构、多模态 RLHF、视频理解（TimeSearch-R 等）、多模态 Agent
+
+**衔接已有知识**：
+- llm-paper-tutorials A1-DeepSeek-V3（最新架构设计）
+- diy-llm Ch11 RLHF（多模态 RLHF 直接类比）
+- llm-paper-tutorials 06-InstructGPT（RLHF 流程）
+
+**参考资源**：
+| 类型 | 资源 | 对应内容 |
+|------|------|---------|
+| 📄 论文 | **Qwen-VL / Qwen2-VL** 技术报告 | 当前最强开源多模态模型之一 |
+| 🎓 课程 | TGLTommy: Qwen3-VL 实战（第12章） | 256K 长上下文 + DeepStack + MRoPE，含 SFT 微调全流程 |
+| 📄 论文 | **LLaVA-NeXT / LLaVA-OneVision** | LLaVA 系列最新进展 |
+| 📄 论文 | **Video-LLaVA / TimeSearch-R** | 视频理解，多模态的下一个前沿 |
+| 🎓 教程 | CVPR 2024 MLLM Tutorial 后半部分 | 多模态推理、高效学习 |
+| 📄 论文 | **GPT-4V System Card** | OpenAI 官方对多模态能力的分析 |
+| 🎓 课程 | B站：多模态教程 第7-5节 "LLM-based Agents" | 多模态 Agent 概念 |
 
 ---
 
@@ -146,43 +316,11 @@ makemore                          ──→ 生成模型直觉
                 └───────────┘
 ```
 
-**预估时间**：
+**预估学习时间**（每天 2-3 小时）：
 - 模块 A：1天
 - 模块 B：2-3周（B2 数学较重，需要慢学）
 - 模块 C：2周
-- 总计：5-6周（每天 2-3 小时）
-
----
-
-## 📋 推荐学习资源
-
-### Diffusion 模型
-| 资源 | 类型 | 说明 | 对应章节 |
-|------|------|------|---------|
-| DeepLearning.AI: How Diffusion Models Work | 短课(1h) | 从零构建 Diffusion，Sharon Zhou 主讲 | B1-B2 预习 |
-| MIT 6.S183: Practical Diffusion Models | 完整课程 | 采样可视化、条件生成、自定义训练 | B1-B4 |
-| Stanford CS231n Lecture 14 (2025) | 讲座 | Diffusion 数学：Score、SDE、DiT | B2、B5 |
-| Stanford CS236: Deep Generative Models | 课程 | VAE/Flow/Diffusion 深入 | A1、B2 |
-
-### 多模态
-| 资源 | 类型 | 说明 | 对应章节 |
-|------|------|------|---------|
-| Stanford CS231n Lecture 16 (2025) | 讲座 | CLIP→LLaVA→GPT-4V 完整演进 | C1-C4 |
-| CVPR 2024 MLLM Tutorial | 教程 | 架构设计、幻觉、推理、高效学习 | C3-C4 |
-| B站：多模态+大模型教程 BV1azRgYbECW | 视频 | CLIP、BLIP、DALL-E、SAM 中文精讲 | C1-C3 |
-
-### 核心论文（建议用 llm-paper-tutorials 四层递进法精读）
-| 顺序 | 论文 | 年份 | 对应章节 |
-|------|------|------|---------|
-| 1 | DDPM (Ho et al.) | 2020 | B1-B2 |
-| 2 | DDIM (Song et al.) | 2020 | B3 |
-| 3 | Stable Diffusion / Latent Diffusion (Rombach et al.) | 2022 | B4 |
-| 4 | DiT (Peebles & Xie) | 2022 | B5 |
-| 5 | ViT (Dosovitskiy et al.) | 2020 | C1 |
-| 6 | CLIP (Radford et al.) | 2021 | C2 |
-| 7 | BLIP-2 (Li et al.) | 2023 | C3 |
-| 8 | LLaVA (Liu et al.) | 2023 | C3 |
-| 9 | Sora / Video Diffusion | 2024 | B5 |
+- 总计：5-6周
 
 ---
 
@@ -221,7 +359,10 @@ diffusion-multimodal-tutorial/
     │   ├── raw-extract.md
     │   ├── README.md            ← 四层递进法教程
     │   └── merged-tutorial.md
+    ├── ddim/
+    ├── stable-diffusion/
     ├── dit/
+    ├── vit/
     ├── clip/
     └── llava/
 ```
